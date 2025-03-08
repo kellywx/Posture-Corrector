@@ -1,0 +1,14 @@
+
+{
+    "manifest_version": 3,
+    "name": "Simple Reminder",
+    "version": "1.0",
+    "description": "A simple extension to set reminders",
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "permissions": ["alarms", "notifications", "storage"],
+    "background": {
+      "service_worker": "background.js"
+    }
+  }

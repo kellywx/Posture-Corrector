@@ -1,0 +1,119 @@
+<!-- popup.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Posture Reminder</title>
+  <style>
+    body {
+      width: 300px;
+      font-family: Arial, sans-serif;
+      padding: 15px;
+    }
+    h1 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    .reminder-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    label {
+      font-weight: bold;
+      color: #444;
+    }
+    select, button {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      background-color: #4285F4;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #3367D6;
+    }
+    .status {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+      text-align: center;
+    }
+    .success {
+      background-color: #e6f4ea;
+      color: #137333;
+      display: block;
+    }
+    .error {
+      background-color: #fce8e6;
+      color: #c5221f;
+      display: block;
+    }
+    .tips {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    .tips h2 {
+      font-size: 14px;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .tips ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .active-reminder {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #e8f0fe;
+      border-radius: 4px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Posture Reminder</h1>
+  <div class="reminder-form">
+    <div class="form-group">
+      <label for="interval">Remind me every:</label>
+      <select id="interval">
+        <option value="1">1 hour</option>
+        <option value="2">2 hours</option>
+        <option value="4">4 hours</option>
+      </select>
+    </div>
+    <button id="set-reminder">Set Reminder</button>
+    <button id="stop-reminder" style="background-color: #ea4335; display: none;">Stop Reminders</button>
+    <div id="status" class="status"></div>
+    <div id="active-reminder" class="active-reminder"></div>
+  </div>
+  
+  <div class="tips">
+    <h2>Proper Posture Tips:</h2>
+    <ul>
+      <li>Keep your back straight and shoulders relaxed</li>
+      <li>Position your screen at eye level</li>
+      <li>Keep your feet flat on the floor</li>
+      <li>Take short breaks to stretch every hour</li>
+    </ul>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
