@@ -7,6 +7,7 @@ export let isTooClose = false;
 
 let video = document.getElementById("webcam");
 const liveView = document.getElementById("liveView");
+let setupStatus = document.getElementById("status");
 let reminderIntervalId = null;
 let timeoutId = null; // Track timeout for camera duration
 let isWebcamRunning = false; // Track webcam state
@@ -29,7 +30,7 @@ const initializeFaceDetector = async () => {
 initializeFaceDetector();
 
 // Check if webcam access is supported
-const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia();
+// const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia();
 
 // Start the webcam
 async function enableCam() {
@@ -109,7 +110,8 @@ function displayVideoDetections(detections) {
       highlighter.classList.add("red-background");
       highlighter.classList.remove("green-background");
 
-      showBrowserNotification("!!! You are probably slouched !!!");
+      // showBrowserNotification("!!! You are probably slouched !!!");
+      alert("!!! You are probably slouched !!!");
     } else {
       p.innerText = "Good distance from screen";
       p.classList.add("green-background");
@@ -163,15 +165,15 @@ function hideDetectionElements() {
   console.log("Detection elements hidden.");
 }
 
-// Re-initialize the face detection model
-async function reinitializeFaceDetector() {
-  try {
-    await initializeFaceDetector();
-    console.log("Face detector re-initialized.");
-  } catch (error) {
-    console.error("Error re-initializing face detector:", error);
-  }
-}
+// // Re-initialize the face detection model
+// async function reinitializeFaceDetector() {
+//   try {
+//     await initializeFaceDetector();
+//     console.log("Face detector re-initialized.");
+//   } catch (error) {
+//     console.error("Error re-initializing face detector:", error);
+//   }
+// }
 
 // Set reminder to start webcam at specific intervals
 function startReminder(interval) {
@@ -202,6 +204,8 @@ function startReminder(interval) {
     }, 5000); // Camera stays on for 5 seconds
 
   }, interval); // Set the interval between camera toggles
+
+  setupStatus.style.display = "block";
 }
 
 // Handle reminder interval change
@@ -228,6 +232,7 @@ document.getElementById("cancelButton").addEventListener("click", () => {
     clearTimeout(timeoutId);
     timeoutId = null;
   }
+  setupStatus.style.display = "none";
   console.log("Reminder canceled.");
 });
 

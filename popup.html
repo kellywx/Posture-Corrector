@@ -87,11 +87,12 @@
       padding-left: 20px;
     }
     .active-reminder {
-      margin-top: 15px;
+      margin: 10px 0;
       padding: 10px;
       background-color: #e8f0fe;
       border-radius: 4px;
       display: none;
+      color: #ff0000;
     }
   </style>
 </head>
@@ -108,6 +109,7 @@
   </div>
 
   <hr >
+  <div id="status" class="active-reminder">Your posture reminder is currently active.</div>
   <div class="reminder-form">
     <div class="reminder">
       <label for="interval">Remind me every:</label>
@@ -136,8 +138,8 @@
       <video id="webcam" autoplay playsinline></video>
     </div>
 
-    <div id="status" class="status"></div>
-    <div id="active-reminder" class="active-reminder"></div>
+    <!-- <div id="status" class="status"></div> -->
+    
   </div>
   
   
