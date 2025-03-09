@@ -60,7 +60,7 @@ Reminder System: Based on user preferences, the extension will send notification
 
 - Chrome Alarms API → Manages interval-based reminders
 
-### User Stories####
+### User Stories
 
 **As a student or professional** :
 
