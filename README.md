@@ -1,6 +1,6 @@
-# Posture-Corrector
+# Posture-Body
 
-Project Title is a Chrome extension designed to help users maintain good posture while working on their computers by providing real-time posture monitoring and corrective feedback
+**Posture-Body** is a Chrome extension designed to help users maintain good posture while working on their computers by providing real-time posture monitoring and corrective feedback
 
 
 ## Description
@@ -11,19 +11,19 @@ PostureAI addresses the issue of poor posture among students and professionals w
 
 1. **Real-time Posture Monitoring**
 
-The extension accesses the webcam to scan the user's face and measure the distance from the laptop screen.
-
-If the user is sitting too close or too far, the extension provides real-time feedback like “Too Close” or “Too Far”.
-
-If the posture is correct, a green indicator confirms “Good to go”.
-
-Users receive posture correction guidance based on detected deviations.
+   The extension accesses the webcam to scan the user's face and measure the distance from the laptop screen.
+   
+   If the user is sitting too close or too far, the extension provides real-time feedback like “Too Close” or “Too Far”.
+   
+   If the posture is correct, a green indicator confirms “Good to go”.
+   
+   Users receive posture correction guidance based on detected deviations.
 
 2. **Customizable Reminder Intervals**
 
-Users can set reminders at preferred intervals (every 60 minutes, 2 hours, or 4 hours).
-
-The extension sends gentle notifications as side pop-ups to prompt posture correction.
+   Users can set reminders at preferred intervals (every 60 minutes, 2 hours, or 4 hours).
+   
+   The extension sends gentle notifications as side pop-ups to prompt posture correction.
 
 3. **Non-Intrusive & Easy to Use**
 
@@ -31,15 +31,6 @@ No need for external devices—only a webcam and a Chrome browser are required.
 
 The extension runs in the background and provides real-time posture correction without disrupting workflow.
 
-How It Works
-
-Webcam Access: The extension requests access to the user's webcam to scan their posture.
-
-Pose Estimation Model: It utilizes Google's MediaPipe Pose for real-time posture tracking and TensorFlow.js for AI-based corrections.
-
-Visual Overlay: A simple on-screen outline (green for correct posture, red for incorrect posture) helps the user adjust their sitting position.
-
-Reminder System: Based on user preferences, the extension will send notifications at selected intervals to remind users to check their posture.
 
 ### Tech Stack
 
