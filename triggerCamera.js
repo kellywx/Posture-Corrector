@@ -50,8 +50,8 @@ async function enableCam(event) {
     return;
   }
 
-  // Hide the button.
-  enableWebcamButton.classList.add("removed");
+  // Hide the button after activating camera:
+  // enableWebcamButton.classList.add("removed");
 
   // getUsermedia parameters
   const constraints = {
@@ -95,7 +95,7 @@ async function predictWebcam() {
 
 // Estimate the distance based on the bounding box width
 function estimateFaceDistance(faceWidth) {
-  const screenThreshold = (1 / 2) * video.offsetWidth;
+  const screenThreshold = (2 / 5) * video.offsetWidth;
   return faceWidth >= screenThreshold;
 }
 
@@ -117,15 +117,7 @@ function displayVideoDetections(detections) {
     // Check if the face is too close based on bounding box width
     isTooClose = estimateFaceDistance(detection.boundingBox.width);
 
-    // console.log("Is too close:", isTooClose);
-    // if (isTooClose) {
-    //   alert("Face is too close to the screen.");
-    // }
-
-
     const p = document.createElement("p");
-    // p.innerText =
-    //   "Confidence: " + Math.round(parseFloat(detection.categories[0].score) * 100) + "% .";
 
     p.style =
       "left: " +
@@ -164,6 +156,7 @@ function displayVideoDetections(detections) {
 
         highlighter.classList.add("red-background");
         highlighter.classList.remove("green-background");
+        alert( "!!! Face too close to screen !!!");
     } else {
         p.innerText = "Good distance from screen";
 
