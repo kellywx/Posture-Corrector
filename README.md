@@ -5,7 +5,7 @@
 
 ## Description
 
-PostureAI addresses the issue of poor posture among students and professionals who spend long hours at their desks. The extension uses AI-powered posture detection via webcam to analyze a user's sitting position and provide real-time feedback. If the user is too close or too far from the screen, the extension displays corrective messages. Additionally, it allows users to set reminder intervals to encourage healthy posture habits, reducing the risk of chronic pain and discomfort.
+PostureAI addresses the issue of poor posture among students and professionals who spend long hours at their desks. The extension uses AI-powered posture detection via webcam to analyze a user's sitting position and provide real-time feedback. If the user is too close from the screen, the extension displays corrective messages. Additionally, it allows users to set reminder intervals to encourage healthy posture habits, reducing the risk of chronic pain and discomfort.
 
 ### Features
 
@@ -13,7 +13,7 @@ PostureAI addresses the issue of poor posture among students and professionals w
 
    The extension accesses the webcam to scan the user's face and measure the distance from the laptop screen.
    
-   If the user is sitting too close or too far, the extension provides real-time feedback like “Too Close” or “Too Far”.
+   If the user is sitting too close or too far, the extension provides real-time feedback like “Too Close”
    
    If the posture is correct, a green indicator confirms “Good to go”.
    
