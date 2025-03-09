@@ -3,6 +3,7 @@ import {
   FilesetResolver,
   // Detection
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+// import { showModal, closeModal } from "./modelControl";
 
 let faceDetector;
 let runningMode = "IMAGE";
@@ -156,7 +157,17 @@ function displayVideoDetections(detections) {
 
         highlighter.classList.add("red-background");
         highlighter.classList.remove("green-background");
-        alert( "!!! Face too close to screen !!!");
+        // Check if the user has granted permission for notifications
+        if (Notification.permission === "granted") {
+          new Notification("!!! Face too close !!!");
+      } else {
+          // Request permission for notifications if not granted
+          Notification.requestPermission().then(permission => {
+              if (permission === "granted") {
+                  new Notification("!!! Face too close to screen !!!");
+              }
+          });
+      }
     } else {
         p.innerText = "Good distance from screen";
 
@@ -165,6 +176,7 @@ function displayVideoDetections(detections) {
 
         highlighter.classList.add("green-background"); 
         highlighter.classList.remove("red-background");
+        // closeModal();
     }
 
     liveView.appendChild(highlighter);

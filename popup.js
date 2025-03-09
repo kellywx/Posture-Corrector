@@ -1,4 +1,4 @@
-import { isTooClose } from "./triggerCamera";
+// import { isTooClose } from "./triggerCamera";
 
 // popup.js
 document.addEventListener('DOMContentLoaded', function() {
