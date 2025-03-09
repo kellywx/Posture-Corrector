@@ -109,10 +109,19 @@
 
     <!-- set up timer and enable camera -->
     <div id="liveView" class="videoView">
+      <div class="buttonContainer">
       <button id="webcamButton" class="mdc-button mdc-button--raised">
         <span class="mdc-button__ripple"></span>
         <span class="mdc-button__label">SETUP TIMER</span>
       </button>
+
+      <button id="cancelButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">Cancel</span>
+      </button>
+     </div>
+
+
       <video id="webcam" autoplay playsinline></video>
     </div>
 

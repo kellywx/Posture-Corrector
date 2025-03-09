@@ -113,6 +113,22 @@ body {
 .green-background {
   background-color: rgba(0, 255, 255, 0.3); 
 }
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+#webcamButton, #cancelButton {
+  padding: 15px 65px;
+  box-sizing: border-box;
+  font-size: 12px;
+
+}
+#cancelButton {
+  background-color: #ea3b3b;
+}
 /* 
 #customModal {
   display:none;
