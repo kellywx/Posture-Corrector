@@ -1,141 +1,33 @@
-<!-- popup.html -->
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Posture Reminder</title>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0" crossorigin="anonymous" type="module"></script>
-  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/web@latest/dist/mdc.web.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@material/web@latest/dist/mdc.web.min.js"></script>
-  <link rel="stylesheet" href="triggerCamera.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posture Reminder</title>
   <style>
     body {
-      width: 300px;
       font-family: Arial, sans-serif;
-      padding: 15px;
-    }
-    h1 {
-      font-size: 18px;
-      margin-bottom: 15px;
-      color: #333;
-    }
-    .reminder-form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    label {
-      font-weight: bold;
-      color: #444;
+      padding: 10px;
     }
     select, button {
-      padding: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-    button {
-      background-color: #4285F4;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.2s;
-    }
-    button:hover {
-      background-color: #3367D6;
-    }
-    .status {
       margin-top: 10px;
+      width: 100%;
       padding: 10px;
-      border-radius: 4px;
-      display: none;
-      text-align: center;
-    }
-    .success {
-      background-color: #e6f4ea;
-      color: #137333;
-      display: block;
-    }
-    .error {
-      background-color: #fce8e6;
-      color: #c5221f;
-      display: block;
-    }
-    .tips {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #f8f9fa;
-      border-radius: 4px;
-      font-size: 13px;
-    }
-    .tips h2 {
-      font-size: 14px;
-      margin-top: 0;
-      margin-bottom: 8px;
-    }
-    .tips ul {
-      margin: 0;
-      padding-left: 20px;
-    }
-    .active-reminder {
-      margin-top: 15px;
-      padding: 10px;
-      background-color: #e8f0fe;
-      border-radius: 4px;
-      display: none;
     }
   </style>
 </head>
 <body>
   <h1>Posture Reminder</h1>
-  <div class="reminder-form">
-    <div class="form-group">
-      <label for="interval">Remind me every:</label>
-      <select id="interval">
-        <option value="1">1 hour</option>
-        <option value="2">2 hours</option>
-        <option value="4">4 hours</option>
-      </select>
-    </div>
-    <button id="set-reminder">Set Reminder</button>
-    <button id="stop-reminder" style="background-color: #ea4335; display: none;">Stop Reminders</button>
-    <div id="status" class="status"></div>
-    <div id="active-reminder" class="active-reminder"></div>
-  </div>
-  
-  <div class="tips">
-    <h2>Proper Posture Tips:</h2>
-    <ul>
-      <li>Keep your back straight and shoulders relaxed</li>
-      <li>Position your screen at eye level</li>
-      <li>Keep your feet flat on the floor</li>
-      <li>Take short breaks to stretch every hour</li>
-    </ul>
-  </div>
+  <label for="interval">Remind me every:</label>
+  <select id="interval">
+    <option value="1">1 minute</option>
+    <option value="30">30 minutes</option>
+    <option value="60">1 hour</option>
+    <option value="120">2 hours</option>
+  </select>
+  <button id="start">Start Reminder</button>
+  <!-- <button id="stop" hidden>Stop</button> -->
 
-  <!-- <div id="liveView" class="videoView"></div>
-    <button id="testCamera" style="background-color: #ff0000">Turn On Camera</button>
-    <video id="video" width="640" height="480" autoplay ></video>
-  </div> -->
-
-  <div id="liveView" class="videoView">
-    <button id="webcamButton" class="mdc-button mdc-button--raised">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">ENABLE WEBCAM</span>
-    </button>
-    <video id="webcam" autoplay playsinline></video>
-  </div>
-  
-  <script type="module" src="popup.js"></script>
-  <script type="module" src="triggerCamera.js"></script>
-
+  <script src="popup.js"></script>
 </body>
 </html>
