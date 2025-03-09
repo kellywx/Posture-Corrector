@@ -25,6 +25,7 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
+      text-align: center;
     }
     .form-group {
       display: flex;
@@ -96,21 +97,6 @@
 </head>
 <body>
   <h1>Posture Reminder</h1>
-  <div class="reminder-form">
-    <div class="form-group">
-      <label for="interval">Remind me every:</label>
-      <select id="interval">
-        <option value="1">1 hour</option>
-        <option value="2">2 hours</option>
-        <option value="4">4 hours</option>
-      </select>
-    </div>
-    <button id="set-reminder">Set Reminder</button>
-    <button id="stop-reminder" style="background-color: #ea4335; display: none;">Stop Reminders</button>
-    <div id="status" class="status"></div>
-    <div id="active-reminder" class="active-reminder"></div>
-  </div>
-  
   <div class="tips">
     <h2>Proper Posture Tips:</h2>
     <ul>
@@ -121,18 +107,41 @@
     </ul>
   </div>
 
-  <!-- <div id="liveView" class="videoView"></div>
-    <button id="testCamera" style="background-color: #ff0000">Turn On Camera</button>
-    <video id="video" width="640" height="480" autoplay ></video>
-  </div> -->
+  <hr >
+  <div class="reminder-form">
+    <div class="reminder">
+      <label for="interval">Remind me every:</label>
+      <select id="reminderInterval">
+        <option value="5">30 minutes</option> 
+        <option value="10">1 hour</option>
+        <option value="30">2 hours</option>
+      </select>
+    </div>
 
-  <div id="liveView" class="videoView">
-    <button id="webcamButton" class="mdc-button mdc-button--raised">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__label">ENABLE WEBCAM</span>
-    </button>
-    <video id="webcam" autoplay playsinline></video>
+    <!-- set up timer and enable camera -->
+    <div id="liveView" class="videoView">
+      <div class="buttonContainer">
+      <button id="webcamButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">SETUP TIMER</span>
+      </button>
+
+      <button id="cancelButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">Cancel</span>
+      </button>
+     </div>
+
+
+      <video id="webcam" autoplay playsinline></video>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="active-reminder" class="active-reminder"></div>
   </div>
+  
+  
+
   
   <script type="module" src="popup.js"></script>
   <script type="module" src="triggerCamera.js"></script>

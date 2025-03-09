@@ -1,15 +1,20 @@
-import {
-  FaceDetector,
-  FilesetResolver,
-  // Detection
-} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
+import { FaceDetector, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 
 let faceDetector;
 let runningMode = "IMAGE";
+let currentStream = null;
 export let isTooClose = false;
 
-// Initialize the object detector
-const initializefaceDetector = async () => {
+let video = document.getElementById("webcam");
+const liveView = document.getElementById("liveView");
+let reminderIntervalId = null;
+let timeoutId = null; // Track timeout for camera duration
+let isWebcamRunning = false; // Track webcam state
+let children = [];
+let lastVideoTime = -1;
+
+// Initialize the face detector
+const initializeFaceDetector = async () => {
   const vision = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
   );
@@ -21,176 +26,224 @@ const initializefaceDetector = async () => {
     runningMode: runningMode,
   });
 };
-initializefaceDetector();
+initializeFaceDetector();
 
-let video = document.getElementById("webcam");
-const liveView = document.getElementById("liveView");
-let enableWebcamButton;
+// Check if webcam access is supported
+const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia();
 
-// Check if webcam access is supported.
-const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia;
-
-// Keep a reference of all the child elements we create
-// so we can remove them easilly on each render.
-var children = [];
-
-// If webcam supported, add event listener to button for when user
-// wants to activate it.
-if (hasGetUserMedia()) {
-  enableWebcamButton = document.getElementById("webcamButton");
-  enableWebcamButton.addEventListener("click", enableCam);
-} else {
-  console.warn("getUserMedia() is not supported by your browser");
-}
-
-// Enable the live webcam view and start detection.
-async function enableCam(event) {
+// Start the webcam
+async function enableCam() {
   if (!faceDetector) {
-    alert("Face Detector is still loading. Please try again..");
+    alert("Face Detector is still loading. Please try again.");
     return;
   }
 
-  // Hide the button.
-  enableWebcamButton.classList.add("removed");
+  const constraints = { video: true };
 
-  // getUsermedia parameters
-  const constraints = {
-    video: true,
-  };
+  try {
+    currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = currentStream;
+    video.style.display = "block"; // Show video element
 
-  // Activate the webcam stream.
-  navigator.mediaDevices
-    .getUserMedia(constraints)
-    .then(function (stream) {
-      video.srcObject = stream;
-      video.addEventListener("loadeddata", predictWebcam);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+    video.addEventListener("loadeddata", predictWebcam);
+    isWebcamRunning = true; // Mark webcam as running
+  } catch (err) {
+    console.error("Error accessing webcam:", err);
+    alert("Could not access webcam.");
+  }
 }
 
-let lastVideoTime = -1;
+// Webcam prediction loop
 async function predictWebcam() {
-  // if image mode is initialized, create a new classifier with video runningMode
+  if (!video.srcObject) {
+    console.warn("Video stream is not available.");
+    return;
+  }
+
   if (runningMode === "IMAGE") {
     runningMode = "VIDEO";
     await faceDetector.setOptions({ runningMode: "VIDEO" });
   }
+
   let startTimeMs = performance.now();
 
-  // Detect faces using detectForVideo
+  // Detect faces
   if (video.currentTime !== lastVideoTime) {
     lastVideoTime = video.currentTime;
-    const detections = faceDetector.detectForVideo(
-      video,
-      startTimeMs
-    ).detections;
+    const detections = faceDetector.detectForVideo(video, startTimeMs).detections;
     displayVideoDetections(detections);
   }
 
-  // Call this function again to keep predicting when the browser is ready
   window.requestAnimationFrame(predictWebcam);
 }
 
-// Estimate the distance based on the bounding box width
+// Estimate the distance from the face to the screen
 function estimateFaceDistance(faceWidth) {
-  const screenThreshold = (1 / 2) * video.offsetWidth;
+  const screenThreshold = (2 / 5) * video.offsetWidth;
   return faceWidth >= screenThreshold;
 }
 
+// Display face detection results
 function displayVideoDetections(detections) {
-  // Remove any previous drawings
   for (let child of children) {
     liveView.removeChild(child);
   }
   children.splice(0);
 
-  // Iterate through predictions and draw them to the live view
   for (let detection of detections) {
-    const detectionBoxLeft =
-      video.offsetWidth -
-      detection.boundingBox.width -
-      detection.boundingBox.originX;
-
-    
-    // Check if the face is too close based on bounding box width
+    const detectionBoxLeft = video.offsetWidth - detection.boundingBox.width - detection.boundingBox.originX;
     isTooClose = estimateFaceDistance(detection.boundingBox.width);
 
-    // console.log("Is too close:", isTooClose);
-    // if (isTooClose) {
-    //   alert("Face is too close to the screen.");
-    // }
-
-
     const p = document.createElement("p");
-    // p.innerText =
-    //   "Confidence: " + Math.round(parseFloat(detection.categories[0].score) * 100) + "% .";
-
-    p.style =
-      "left: " +
-      detectionBoxLeft +
-      "px;" +
-      "top: " +
-      (detection.boundingBox.originY - 30) +
-      "px; " +
-      "width: " +
-      (detection.boundingBox.width - 10) +
-      "px;";
+    p.style = `left: ${detectionBoxLeft}px; top: ${(detection.boundingBox.originY - 30)}px; width: ${(detection.boundingBox.width - 10)}px;`;
 
     const highlighter = document.createElement("div");
-
     highlighter.setAttribute("class", "highlighter");
-
-    highlighter.style =
-      "left: " +
-      detectionBoxLeft +
-      "px;" +
-      "top: " +
-      detection.boundingBox.originY +
-      "px;" +
-      "width: " +
-      (detection.boundingBox.width - 10) +
-      "px;" +
-      "height: " +
-      detection.boundingBox.height +
-      "px;";
+    highlighter.style = `left: ${detectionBoxLeft}px; top: ${detection.boundingBox.originY}px; width: ${(detection.boundingBox.width - 10)}px; height: ${detection.boundingBox.height}px;`;
 
     if (isTooClose) {
-        p.innerText = "!!! Face too close to screen !!!";
+      p.innerText = "!!! Face too close to screen !!!";
+      p.classList.add("red-background");
+      p.classList.remove("green-background");
 
-        p.classList.add("red-background"); // Add red background class
-        p.classList.remove("green-background"); // Remove green background class if exists
+      highlighter.classList.add("red-background");
+      highlighter.classList.remove("green-background");
 
-        highlighter.classList.add("red-background");
-        highlighter.classList.remove("green-background");
+      showBrowserNotification("!!! You are probably slouched !!!");
     } else {
-        p.innerText = "Good distance from screen";
+      p.innerText = "Good distance from screen";
+      p.classList.add("green-background");
+      p.classList.remove("red-background");
 
-        p.classList.add("green-background"); // Add green background class
-        p.classList.remove("red-background"); // Remove red background class if exists
-
-        highlighter.classList.add("green-background"); 
-        highlighter.classList.remove("red-background");
+      highlighter.classList.add("green-background");
+      highlighter.classList.remove("red-background");
     }
 
     liveView.appendChild(highlighter);
     liveView.appendChild(p);
-
-    // Store drawn objects in memory so they are queued to delete at next call
     children.push(highlighter);
     children.push(p);
 
-    // Display keypoints if available
     for (let keypoint of detection.keypoints) {
       const keypointEl = document.createElement("span");
       keypointEl.className = "key-point";
       keypointEl.style.top = `${keypoint.y * video.offsetHeight - 3}px`;
-      keypointEl.style.left = `${
-        video.offsetWidth - keypoint.x * video.offsetWidth - 3
-      }px`;
+      keypointEl.style.left = `${video.offsetWidth - keypoint.x * video.offsetWidth - 3}px`;
       liveView.appendChild(keypointEl);
       children.push(keypointEl);
     }
+  }
+}
+
+// Stop the camera
+function stopCamera() {
+  if (currentStream) {
+    currentStream.getTracks().forEach(track => track.stop());
+    currentStream = null;
+    video.srcObject = null;
+    video.style.display = "none";
+    console.log("Webcam stopped");
+  }
+
+  isWebcamRunning = false; // Mark webcam as stopped
+  hideDetectionElements();
+}
+
+// Hide all detection elements
+function hideDetectionElements() {
+  const liveView = document.getElementById("liveView");
+  const highlighters = liveView.querySelectorAll(".highlighter");
+  const paragraphs = liveView.querySelectorAll("p");
+  const keypoints = liveView.querySelectorAll(".key-point");
+
+  highlighters.forEach(el => el.style.display = "none");
+  paragraphs.forEach(el => el.style.display = "none");
+  keypoints.forEach(el => el.style.display = "none");
+
+  console.log("Detection elements hidden.");
+}
+
+// Re-initialize the face detection model
+async function reinitializeFaceDetector() {
+  try {
+    await initializeFaceDetector();
+    console.log("Face detector re-initialized.");
+  } catch (error) {
+    console.error("Error re-initializing face detector:", error);
+  }
+}
+
+// Set reminder to start webcam at specific intervals
+function startReminder(interval) {
+  // Clear any existing interval
+  if (reminderIntervalId) {
+    clearInterval(reminderIntervalId);
+  }
+
+  // Function to toggle camera on and off
+  function toggleCamera() {
+    if (isWebcamRunning) {
+      stopCamera();
+    } else {
+      enableCam();
+    }
+  }
+
+  // Start the interval to toggle the camera
+  reminderIntervalId = setInterval(() => {
+    // Toggle camera on for 5 seconds
+    toggleCamera();
+    
+    timeoutId = setTimeout(() => {
+      // After 5 seconds, stop the camera
+      if (isWebcamRunning) {
+        stopCamera();
+      }
+    }, 5000); // Camera stays on for 5 seconds
+
+  }, interval); // Set the interval between camera toggles
+}
+
+// Handle reminder interval change
+document.getElementById("reminderInterval").addEventListener("change", (event) => {
+  const interval = parseInt(event.target.value) * 1000; // Convert seconds to milliseconds
+  startReminder(interval);
+});
+
+// Attach event listener to the "SETUP TIMER" button
+document.getElementById("webcamButton").addEventListener("click", () => {
+  const interval = parseInt(document.getElementById("reminderInterval").value) * 1000; // Convert seconds to milliseconds
+  startReminder(interval);
+  console.log("Reminder set successfully.");
+});
+
+// Attach event listener to the "Cancel" button
+document.getElementById("cancelButton").addEventListener("click", () => {
+  stopCamera();
+  if (reminderIntervalId) {
+    clearInterval(reminderIntervalId);
+    reminderIntervalId = null;
+  }
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+  console.log("Reminder canceled.");
+});
+
+// Function to show the browser notification
+function showBrowserNotification(message) {
+  if (Notification.permission === "granted") {
+    const notification = new Notification("Face Detection Alert", {
+      body: message,
+      // icon: "icon.png",  // Optional: Add an icon if needed
+    });
+    
+    // Close notification after a few seconds
+    setTimeout(() => {
+      notification.close();
+    }, 5000); // Notification will disappear after 5 seconds
+  } else {
+    console.log("Notification permission not granted.");
   }
 }

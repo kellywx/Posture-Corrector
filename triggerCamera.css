@@ -34,6 +34,11 @@ body {
   .mdc-button.mdc-button--raised.removed {
     display: none;
   }
+
+  #webcam {
+    margin-top: 15px !important;
+  }
+  
   
   .invisible {
     opacity: 0.2;
@@ -108,3 +113,32 @@ body {
 .green-background {
   background-color: rgba(0, 255, 255, 0.3); 
 }
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+#webcamButton, #cancelButton {
+  padding: 15px 65px;
+  box-sizing: border-box;
+  font-size: 12px;
+
+}
+#cancelButton {
+  background-color: #ea3b3b;
+}
+/* 
+#customModal {
+  display:none;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background-color: rgba(0,0,0,0.5); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+} */
