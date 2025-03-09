@@ -37,4 +37,3 @@ startButton.addEventListener("click", () => {
         })
     });
   });
-
