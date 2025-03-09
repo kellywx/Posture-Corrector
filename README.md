@@ -32,25 +32,6 @@ No need for external devices—only a webcam and a Chrome browser are required.
 The extension runs in the background and provides real-time posture correction without disrupting workflow.
 
 
-### Tech Stack
-
-#### Frontend & Chrome Extension Development ####
-- HTML, CSS, JavaScript → For UI and interactivity
-
-- Chrome Extensions API → For creating the popup and settings menu
-
-- Manifest v3 → Required for Chrome extensions
-
-#### Posture Detection & AI ####
-
-- MediaPipe Pose → Pre-trained model for detecting body posture
-
-- TensorFlow.js → Additional AI-based corrections (if required)
-
-- Reminders & Notifications
-
-- Chrome Alarms API → Manages interval-based reminders
-
 ### User Stories
 
 **As a student or professional** :
