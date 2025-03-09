@@ -27,9 +27,9 @@ PostureAI addresses the issue of poor posture among students and professionals w
 
 3. **Non-Intrusive & Easy to Use**
 
-No need for external devices—only a webcam and a Chrome browser are required.
-
-The extension runs in the background and provides real-time posture correction without disrupting workflow.
+   No need for external devices—only a webcam and a Chrome browser are required.
+   
+   The extension runs in the background and provides real-time posture correction without disrupting workflow.
 
 
 ### User Stories
