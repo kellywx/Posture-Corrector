@@ -1,3 +1,4 @@
+import { initializeFaceDetector, startWebcam } from './triggerCamera_bak.js'; 
 // popup.js
 document.addEventListener('DOMContentLoaded', function() {
     const setReminderButton = document.getElementById('set-reminder');
@@ -7,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const activeReminderDiv = document.getElementById('active-reminder');
     
     // Check if a reminder is already active
-    checkActiveReminder();
+    // checkActiveReminder();
     
     setReminderButton.addEventListener('click', function() {
       const hours = parseInt(intervalSelect.value, 10);
@@ -47,27 +48,27 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
     
-    function checkActiveReminder() {
-      chrome.storage.local.get('postureReminderSettings', function(data) {
-        if (data.postureReminderSettings && data.postureReminderSettings.active) {
-          const settings = data.postureReminderSettings;
-          const hours = settings.minutes / 60;
+    // function checkActiveReminder() {
+    //   chrome.storage.local.get('postureReminderSettings', function(data) {
+    //     if (data.postureReminderSettings && data.postureReminderSettings.active) {
+    //       const settings = data.postureReminderSettings;
+    //       const hours = settings.minutes / 60;
           
-          activeReminderDiv.textContent = `Currently reminding every ${hours} hour${hours > 1 ? 's' : ''}.`;
-          activeReminderDiv.style.display = 'block';
+    //       activeReminderDiv.textContent = `Currently reminding every ${hours} hour${hours > 1 ? 's' : ''}.`;
+    //       activeReminderDiv.style.display = 'block';
           
-          stopReminderButton.style.display = 'block';
-          setReminderButton.style.display = 'none';
+    //       stopReminderButton.style.display = 'block';
+    //       setReminderButton.style.display = 'none';
           
-          // Set the select to the current interval
-          intervalSelect.value = hours.toString();
-        } else {
-          activeReminderDiv.style.display = 'none';
-          stopReminderButton.style.display = 'none';
-          setReminderButton.style.display = 'block';
-        }
-      });
-    }
+    //       // Set the select to the current interval
+    //       intervalSelect.value = hours.toString();
+    //     } else {
+    //       activeReminderDiv.style.display = 'none';
+    //       stopReminderButton.style.display = 'none';
+    //       setReminderButton.style.display = 'block';
+    //     }
+    //   });
+    // }
     
     function showStatus(message, type) {
       statusDiv.textContent = message;
@@ -84,3 +85,4 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 3000);
     }
   });
+

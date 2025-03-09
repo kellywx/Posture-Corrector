@@ -1,14 +1,26 @@
 
 {
     "manifest_version": 3,
-    "name": "Simple Reminder",
+    "name": "Posture Corrector",
     "version": "1.0",
-    "description": "A simple extension to set reminders",
+    "description": "Detect posture and provide reminders to correct posture.",
     "action": {
       "default_popup": "popup.html"
     },
-    "permissions": ["alarms", "notifications", "storage"],
+    "permissions": ["alarms", "notifications", "storage", "activeTab",
+    "camera", "videoCapture", "identity"],
     "background": {
-      "service_worker": "background.js"
-    }
+      "service_worker": ["background.js"],
+      "persistent": false
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["popup.js", "triggerCamera.js", "faceDetection.js"]
+      }
+    ],
+    "host_permissions": [
+      "http://*/*",
+      "https://*/*"
+    ]
   }
