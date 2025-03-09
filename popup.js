@@ -1,4 +1,5 @@
-import { initializeFaceDetector, startWebcam } from './triggerCamera_bak.js'; 
+import { isTooClose } from "./triggerCamera";
+
 // popup.js
 document.addEventListener('DOMContentLoaded', function() {
     const setReminderButton = document.getElementById('set-reminder');

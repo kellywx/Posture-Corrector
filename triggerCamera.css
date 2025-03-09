@@ -63,19 +63,22 @@ body {
     position: absolute;
     padding-bottom: 5px;
     padding-top: 5px;
-    background-color: #007f8b;
+    /* background-color: #007f8b; */
     color: #fff;
     border: 1px dashed rgba(255, 255, 255, 0.7);
     z-index: 2;
-    font-size: 12px;
+    font-size: 16px;
     margin: 0;
+    text-align: center;
+    font-weight: bold;
   }
   
   .highlighter {
-    background: rgba(0, 255, 0, 0.25);
+    /* background: rgba(0, 255, 0, 0.25); */
     border: 1px dashed #fff;
     z-index: 1;
     position: absolute;
+    font-size: 16px;
   }
   
   .detectOnClick {
@@ -96,3 +99,12 @@ body {
     display: block;
   }
   
+  /* Class for red background (when too close) */
+.red-background {
+  background-color: rgba(255, 0, 0, 0.3); 
+}
+
+/* Class for green background (good distance) */
+.green-background {
+  background-color: rgba(0, 255, 255, 0.3); 
+}
