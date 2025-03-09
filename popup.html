@@ -25,6 +25,7 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
+      text-align: center;
     }
     .form-group {
       display: flex;
@@ -96,16 +97,26 @@
 </head>
 <body>
   <h1>Posture Reminder</h1>
+  <div class="tips">
+    <h2>Proper Posture Tips:</h2>
+    <ul>
+      <li>Keep your back straight and shoulders relaxed</li>
+      <li>Position your screen at eye level</li>
+      <li>Keep your feet flat on the floor</li>
+      <li>Take short breaks to stretch every hour</li>
+    </ul>
+  </div>
+
+  <hr >
   <div class="reminder-form">
-    <div class="form-group">
+    <div class="reminder">
       <label for="interval">Remind me every:</label>
-      <select id="interval">
-        <option value="1">1 hour</option>
-        <option value="2">2 hours</option>
-        <option value="4">4 hours</option>
+      <select id="reminderInterval">
+        <option value="5">30 minutes</option> 
+        <option value="10">1 hour</option>
+        <option value="30">2 hours</option>
       </select>
     </div>
-    <!-- <button id="set-reminder">Set Reminder</button> -->
 
     <!-- set up timer and enable camera -->
     <div id="liveView" class="videoView">
@@ -129,17 +140,7 @@
     <div id="active-reminder" class="active-reminder"></div>
   </div>
   
-  <div class="tips">
-    <h2>Proper Posture Tips:</h2>
-    <ul>
-      <li>Keep your back straight and shoulders relaxed</li>
-      <li>Position your screen at eye level</li>
-      <li>Keep your feet flat on the floor</li>
-      <li>Take short breaks to stretch every hour</li>
-    </ul>
-  </div>
-
- 
+  
 
   
   <script type="module" src="popup.js"></script>
