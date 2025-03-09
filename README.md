@@ -1,9 +1,15 @@
-# Posture-Body
+# PosturePal
 
-**Posture-Body** is a Chrome extension designed to help users maintain good posture while working on their computers by providing real-time posture monitoring and corrective feedback
+Presenting PosturePal! A Chrome extension designed to help users improve their posture and sitting position through a face-detection algorithm that provides instant feedback.
 
 
-## Description
+## Inspiration
+
+Whether you are sitting at your desk, buried under a mountain of never-ending school assignments, or staring at the red error lines under your code during an intense 24-hour hackathon, everyone’s posture can be improved, especially those who find themselves hunched over like an old tortoise after a few hours in front of a computer. Bad posture can be damaging and lead to long-term health issues, which is why we created PostureBuddy. 
+
+## What it does
+
+Powered by the MediaPipe library, PosturePal uses a face detection algorithm to analyze your posture and provide instant feedback. Users can set how often they want to be reminded, and when the time comes, PosturePal analyzes the user's distance from the screen using the computerUsing your computer's camera.
 
 PostureAI addresses the issue of poor posture among students and professionals who spend long hours at their desks. The extension uses AI-powered posture detection via webcam to analyze a user's sitting position and provide real-time feedback. If the user is too close from the screen, the extension displays corrective messages. Additionally, it allows users to set reminder intervals to encourage healthy posture habits, reducing the risk of chronic pain and discomfort.
 
